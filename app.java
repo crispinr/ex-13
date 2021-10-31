@@ -1,5 +1,8 @@
 import java.util.Scanner;
 import java.util.regex.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -38,6 +41,22 @@ public class app {
                     for (int i = 0; i < tot; i++) {
                         System.out.println("Name of student " + (i + 1) + ": ");
                         stud[i] = s.next();
+                    }
+                    BufferedWriter br;
+                    try {
+                        br = new BufferedWriter(new FileWriter("sample.csv"));
+                        StringBuilder sb = new StringBuilder();
+
+                        // Append strings from array
+                        for (String element : stud) {
+                            sb.append(element);
+                            sb.append(",");
+                        }
+                        br.write(sb.toString());
+
+                        br.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
 
                 } else {

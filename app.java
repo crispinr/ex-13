@@ -32,6 +32,13 @@ public class app {
                     String dateAndTime = dateTimeFormat.format(now);
                     System.out.println(dateAndTime);
                     System.out.println("Attendance List for " + dateAndTime + ": ");
+                    System.out.println("Enter the total class strength: ");
+                    int tot = s.nextInt();
+                    String stud[] = new String[tot];
+                    for (int i = 0; i < tot; i++) {
+                        System.out.println("Name of student " + (i + 1) + ": ");
+                        stud[i] = s.next();
+                    }
 
                 } else {
                     System.out.println("Please enter a valid email id!");

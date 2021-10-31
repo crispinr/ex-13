@@ -1,5 +1,7 @@
 import java.util.Scanner;
 import java.util.regex.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class app {
 
@@ -25,6 +27,12 @@ public class app {
                 String email = s.next();
                 if (validate(email)) {
                     System.out.println("Nice");
+                    DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                    LocalDateTime now = LocalDateTime.now();
+                    String dateAndTime = dateTimeFormat.format(now);
+                    System.out.println(dateAndTime);
+                    System.out.println("Attendance List for " + dateAndTime + ": ");
+
                 } else {
                     System.out.println("Please enter a valid email id!");
                 }

@@ -9,19 +9,19 @@ import java.time.format.DateTimeFormatter;
 
 interface utilities {
 
-    void date();
+    String date();
 
     boolean validate(String emailStr);
 }
 
 class util implements utilities {
 
-    public void date() {
+    public String date() {
         String date;
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yy");
         LocalDateTime now = LocalDateTime.now();
         date = dateFormat.format(now);
-        System.out.println("Attendance List for " + date + ": ");
+        return date;
     }
 
     public boolean validate(String emailStr) {
@@ -40,12 +40,13 @@ public class app {
         String email, name;
         char key;
 
+        // objects
         util u = new util();
-
         Scanner s = new Scanner(System.in);
-        System.out.println("~Mr. Attendance~");
+
+        // main loop
         while (true) {
-            System.out.println("Select a login \tS - Student \tF - Faculty");
+            System.out.println("~Mr. Attendance~ \nSelect a login \tS - Student \tF - Faculty");
             key = s.next().charAt(0);
             switch (key) {
             case 'S':
@@ -53,8 +54,7 @@ public class app {
                 System.out.print("Welcome to student login \nEnter your email: ");
                 email = s.next();
                 if (u.validate(email)) {
-                    System.out.println("Nice");
-                    u.date();
+                    System.out.println("Attendance List for " + u.date() + ": ");
                     System.out.print("Enter the total class strength: ");
                     int tot = s.nextInt();
                     ArrayList<String> studList = new ArrayList<String>(tot);
@@ -90,7 +90,7 @@ public class app {
                 email = s.next();
                 if (u.validate(email)) {
                     System.out.println("Nice");
-                    u.date();
+                    System.out.println("Attendance List for " + u.date() + ": ");
                     System.out.print("Enter the total class strength: ");
                     int tot = s.nextInt();
                     ArrayList<String> studList = new ArrayList<String>(tot);

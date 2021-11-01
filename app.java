@@ -12,9 +12,15 @@ interface utilities {
     String date();
 
     boolean validate(String emailStr);
+
+    void student();
+
+    void faculty();
 }
 
 class util implements utilities {
+    String email, name;
+    static Scanner s = new Scanner(System.in);
 
     public String date() {
         String date;
@@ -30,6 +36,78 @@ class util implements utilities {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
         return matcher.find();
     }
+
+    public void student() {
+        System.out.println("Student!");
+        System.out.print("Welcome to student login \nEnter your email: ");
+        email = s.next();
+        if (validate(email)) {
+            System.out.println("Attendance List for " + date() + ": ");
+            System.out.print("Enter the total class strength: ");
+            int tot = s.nextInt();
+            ArrayList<String> studList = new ArrayList<String>(tot);
+            for (int i = 1; i <= tot; i++) {
+                System.out.print("Enter the name of the student: ");
+                name = s.next();
+                studList.add(name);
+            }
+            BufferedWriter br;
+            try {
+                br = new BufferedWriter(new FileWriter("sample.csv"));
+                StringBuilder sb = new StringBuilder();
+
+                // Append strings from array
+                for (String element : studList) {
+                    sb.append(element);
+                    sb.append(",");
+                }
+                br.write(sb.toString());
+
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            System.out.println("Please enter a valid email id!");
+        }
+    }
+
+    public void faculty() {
+        System.out.println("Faculty!");
+        System.out.print("Welcome to faculty login \nEnter your email: ");
+        email = s.next();
+        if (validate(email)) {
+            System.out.println("Attendance List for " + date() + ": ");
+            System.out.print("Enter the total class strength: ");
+            int tot = s.nextInt();
+            ArrayList<String> studList = new ArrayList<String>(tot);
+            for (int i = 1; i <= tot; i++) {
+                System.out.print("Enter the name of the student: ");
+                name = s.next();
+                studList.add(name);
+            }
+            BufferedWriter br;
+            try {
+                br = new BufferedWriter(new FileWriter("sample.csv"));
+                StringBuilder sb = new StringBuilder();
+
+                // Append strings from array
+                for (String element : studList) {
+                    sb.append(element);
+                    sb.append(",");
+                }
+                br.write(sb.toString());
+
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            System.out.println("Please enter a valid email id!");
+        }
+    }
 }
 
 public class app {
@@ -37,88 +115,21 @@ public class app {
     public static void main(String args[]) {
 
         // variables
-        String email, name;
         char key;
 
         // objects
         util u = new util();
-        Scanner s = new Scanner(System.in);
 
         // main loop
         while (true) {
             System.out.println("~Mr. Attendance~ \nSelect a login \tS - Student \tF - Faculty");
-            key = s.next().charAt(0);
+            key = util.s.next().charAt(0);
             switch (key) {
             case 'S':
-                System.out.println("Student!");
-                System.out.print("Welcome to student login \nEnter your email: ");
-                email = s.next();
-                if (u.validate(email)) {
-                    System.out.println("Attendance List for " + u.date() + ": ");
-                    System.out.print("Enter the total class strength: ");
-                    int tot = s.nextInt();
-                    ArrayList<String> studList = new ArrayList<String>(tot);
-                    for (int i = 1; i <= tot; i++) {
-                        System.out.print("Enter the name of the student: ");
-                        name = s.next();
-                        studList.add(name);
-                    }
-                    BufferedWriter br;
-                    try {
-                        br = new BufferedWriter(new FileWriter("sample.csv"));
-                        StringBuilder sb = new StringBuilder();
-
-                        // Append strings from array
-                        for (String element : studList) {
-                            sb.append(element);
-                            sb.append(",");
-                        }
-                        br.write(sb.toString());
-
-                        br.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                } else {
-                    System.out.println("Please enter a valid email id!");
-                }
+                u.student();
                 break;
             case 'F':
-                System.out.println("Faculty!");
-                System.out.print("Welcome to faculty login \nEnter your email: ");
-                email = s.next();
-                if (u.validate(email)) {
-                    System.out.println("Nice");
-                    System.out.println("Attendance List for " + u.date() + ": ");
-                    System.out.print("Enter the total class strength: ");
-                    int tot = s.nextInt();
-                    ArrayList<String> studList = new ArrayList<String>(tot);
-                    for (int i = 1; i <= tot; i++) {
-                        System.out.print("Enter the name of the student: ");
-                        name = s.next();
-                        studList.add(name);
-                    }
-                    BufferedWriter br;
-                    try {
-                        br = new BufferedWriter(new FileWriter("sample.csv"));
-                        StringBuilder sb = new StringBuilder();
-
-                        // Append strings from array
-                        for (String element : studList) {
-                            sb.append(element);
-                            sb.append(",");
-                        }
-                        br.write(sb.toString());
-
-                        br.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                } else {
-                    System.out.println("Please enter a valid email id!");
-                }
+                u.faculty();
                 break;
             default:
                 System.out.println("Please enter a valid login!");
@@ -127,6 +138,5 @@ public class app {
 
             break;
         }
-        s.close();
     }
 }

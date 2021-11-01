@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.*;
 import java.io.BufferedWriter;
@@ -17,17 +18,21 @@ public class app {
     }
 
     public static void main(String args[]) {
+
+        // variables
+        String email, name;
+        char key;
+
         Scanner s = new Scanner(System.in);
         System.out.println("~Mr. Attendance~");
         while (true) {
             System.out.println("Select a login \tS - Student \tF - Faculty");
-            char key;
             key = s.next().charAt(0);
             switch (key) {
             case 'S':
                 System.out.println("Student!");
-                System.out.println("Welcome to student login \nEnter your email: ");
-                String email = s.next();
+                System.out.print("Welcome to student login \nEnter your email: ");
+                email = s.next();
                 if (validate(email)) {
                     System.out.println("Nice");
                     DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
@@ -35,12 +40,13 @@ public class app {
                     String dateAndTime = dateTimeFormat.format(now);
                     System.out.println(dateAndTime);
                     System.out.println("Attendance List for " + dateAndTime + ": ");
-                    System.out.println("Enter the total class strength: ");
+                    System.out.print("Enter the total class strength: ");
                     int tot = s.nextInt();
-                    String stud[] = new String[tot];
-                    for (int i = 0; i < tot; i++) {
-                        System.out.println("Name of student " + (i + 1) + ": ");
-                        stud[i] = s.next();
+                    ArrayList<String> studList = new ArrayList<String>(tot);
+                    for (int i = 1; i <= tot; i++) {
+                        System.out.print("Enter the name of the student: ");
+                        name = s.next();
+                        studList.add(name);
                     }
                     BufferedWriter br;
                     try {
@@ -48,7 +54,7 @@ public class app {
                         StringBuilder sb = new StringBuilder();
 
                         // Append strings from array
-                        for (String element : stud) {
+                        for (String element : studList) {
                             sb.append(element);
                             sb.append(",");
                         }
@@ -65,6 +71,43 @@ public class app {
                 break;
             case 'F':
                 System.out.println("Faculty!");
+                System.out.print("Welcome to faculty login \nEnter your email: ");
+                email = s.next();
+                if (validate(email)) {
+                    System.out.println("Nice");
+                    DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                    LocalDateTime now = LocalDateTime.now();
+                    String dateAndTime = dateTimeFormat.format(now);
+                    System.out.println(dateAndTime);
+                    System.out.println("Attendance List for " + dateAndTime + ": ");
+                    System.out.print("Enter the total class strength: ");
+                    int tot = s.nextInt();
+                    ArrayList<String> studList = new ArrayList<String>(tot);
+                    for (int i = 1; i <= tot; i++) {
+                        System.out.print("Enter the name of the student: ");
+                        name = s.next();
+                        studList.add(name);
+                    }
+                    BufferedWriter br;
+                    try {
+                        br = new BufferedWriter(new FileWriter("sample.csv"));
+                        StringBuilder sb = new StringBuilder();
+
+                        // Append strings from array
+                        for (String element : studList) {
+                            sb.append(element);
+                            sb.append(",");
+                        }
+                        br.write(sb.toString());
+
+                        br.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+                    System.out.println("Please enter a valid email id!");
+                }
                 break;
             default:
                 System.out.println("Please enter a valid login!");

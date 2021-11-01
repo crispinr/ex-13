@@ -1,9 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.*;
-
-import javax.swing.text.Utilities;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;

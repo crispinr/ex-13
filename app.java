@@ -100,6 +100,7 @@ class util implements utilities {
         email = s.next();
         if (validate(email)) {
             createList();
+            exportToCSV();
         } else {
             System.out.println("Please enter a valid email id!");
         }

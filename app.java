@@ -54,7 +54,6 @@ class util implements utilities {
             br = new BufferedWriter(new FileWriter("sample.csv"));
             StringBuilder sb = new StringBuilder();
 
-            // Append strings from array
             for (String element : studList) {
                 sb.append(element);
                 sb.append(",");

@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.sql.*;
 
 interface utilities {
 
@@ -81,6 +82,35 @@ class util implements utilities {
         for (int i = 0; i < studList.size(); i++) {
             System.out.print(studList.get(i) + "\t");
         }
+        String jdbcDriver = "com.mysql.cj.jdbc.Driver";
+        String DB_URL = "jdbc:mysql://localhost:3306/nice";
+        String USER = "root";
+        String PASS = "";
+        String query = "SELECT id, name, email, no FROM my_tab";
+        try {
+            // check jdbc driver (mysql connector / j). Make sure the connector is
+            // configured correctly (added to libraries) before checking it.
+            Class.forName(jdbcDriver);
+            System.out.println("Driver Loaded");
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Driver Failed To Load");
+            ex.printStackTrace();
+        }
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            stmt.executeUpdate(query);
+            while (rs.next()) {
+                // Retrieve by column name
+                System.out.print("ID: " + rs.getInt("id"));
+                System.out.print(", Age: " + rs.getString("name"));
+                System.out.print(", First: " + rs.getString("email"));
+                System.out.println(", Last: " + rs.getInt("no"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void student() {
@@ -132,6 +162,7 @@ public class app {
                 System.out.println("Please enter a valid login!");
                 break;
             }
+            break;
         }
     }
 }

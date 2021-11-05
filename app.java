@@ -82,7 +82,7 @@ class util implements utilities {
         for (int i = 0; i < studList.size(); i++) {
             System.out.print(studList.get(i) + "\t");
         }
-        String jdbcDriver = "com.mysql.cj.jdbc.Driver";
+        String jdbcDriver = "com.mysql.jdbc.Driver";
         String DB_URL = "jdbc:mysql://localhost:3306/nice";
         String USER = "root";
         String PASS = "";

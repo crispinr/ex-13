@@ -52,35 +52,6 @@ class util implements utilities {
     }
 
     public void exportToCSV() {
-        BufferedWriter br;
-        try {
-            br = new BufferedWriter(new FileWriter("data.csv"));
-            StringBuilder sb = new StringBuilder();
-
-            for (String element : studList) {
-                sb.append(element);
-                sb.append(",");
-            }
-            br.write(sb.toString());
-
-            br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void createList() {
-        System.out.print("Enter the total class strength: ");
-        tot = s.nextInt();
-        for (int i = 1; i <= tot; i++) {
-            System.out.print("Enter the name of the student: ");
-            name = s.next();
-            studList.add(name);
-        }
-    }
-
-    public void displayList() {
-        System.out.println("Attendance List for " + date() + ": ");
         try (PrintWriter writer = new PrintWriter("data.csv")) {
             System.out.print("Enter the total roll number: ");
             int roll = s.nextInt();
@@ -106,6 +77,20 @@ class util implements utilities {
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public void createList() {
+        System.out.print("Enter the total class strength: ");
+        tot = s.nextInt();
+        for (int i = 1; i <= tot; i++) {
+            System.out.print("Enter the name of the student: ");
+            name = s.next();
+            studList.add(name);
+        }
+    }
+
+    public void displayList() {
+        System.out.println("Attendance List for " + date() + ": ");
         try {
             Scanner sc = new Scanner(new File("./data.csv"));
             sc.useDelimiter(",");
@@ -116,21 +101,6 @@ class util implements utilities {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        // try {
-        // Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/nice",
-        // "root", "");
-        // PreparedStatement stmt = conn.prepareStatement("SELECT * FROM my_tab");
-        // ResultSet rs = stmt.executeQuery();
-        // stmt.executeUpdate();
-        // if (rs.next() == true) {
-        // System.out.print("ID: " + rs.getInt("id"));
-        // System.out.print(", Age: " + rs.getString("name"));
-        // System.out.print(", First: " + rs.getString("email"));
-        // System.out.println(", Last: " + rs.getInt("no"));
-        // }
-        // } catch (SQLException e) {
-        // e.printStackTrace();
-        // }
     }
 
     public void student() {

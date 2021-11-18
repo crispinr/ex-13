@@ -107,6 +107,15 @@ class util implements utilities {
         email = s.next();
         if (validate(email)) {
             exportToCSV();
+            System.out.print("(D)isplay data or (U)pdate data?");
+            char k = s.next().charAt(0);
+            if (k == 'D') {
+                displayList();
+            } else if (k == 'U') {
+                exportToCSV();
+            } else {
+                System.out.println("Please enter a valid character!");
+            }
         } else {
             System.out.println("Please enter a valid email id!");
         }

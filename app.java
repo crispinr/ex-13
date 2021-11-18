@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.sql.*;
 
 interface utilities {
 
@@ -82,9 +81,6 @@ class util implements utilities {
 
     public void displayList() {
         System.out.println("Attendance List for " + date() + ": ");
-        // for (int i = 0; i < studList.size(); i++) {
-        // System.out.print(studList.get(i) + "\t");
-        // }
         try (PrintWriter writer = new PrintWriter("data.csv")) {
             System.out.print("Enter the total roll number: ");
             int roll = s.nextInt();

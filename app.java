@@ -18,8 +18,6 @@ interface utilities {
 
     void exportToCSV();
 
-    void createList();
-
     void student();
 
     void faculty();
@@ -56,21 +54,24 @@ class util implements utilities {
             System.out.print("Enter the total roll number: ");
             int roll = s.nextInt();
             StringBuilder sb = new StringBuilder();
+            sb.append("Attendance List for, " + date() + ": \n");
             sb.append("Name");
             sb.append(", ");
             sb.append("- Status");
             sb.append("\n\n");
+            int i = 1;
 
             while (roll != 0) {
-                System.out.print("Enter the student name: ");
+                System.out.print("Enter the student " + i + " name: ");
                 String name = s.next();
                 sb.append(name);
                 sb.append(", ");
-                System.out.print("Enter the student status: ");
+                System.out.print("Student status: ");
                 String status = s.next();
                 sb.append("- " + status);
                 sb.append("\n");
                 roll -= 1;
+                i += 1;
             }
             writer.write(sb.toString());
 
@@ -79,18 +80,7 @@ class util implements utilities {
         }
     }
 
-    public void createList() {
-        System.out.print("Enter the total class strength: ");
-        tot = s.nextInt();
-        for (int i = 1; i <= tot; i++) {
-            System.out.print("Enter the name of the student: ");
-            name = s.next();
-            studList.add(name);
-        }
-    }
-
     public void displayList() {
-        System.out.println("Attendance List for " + date() + ": ");
         try {
             Scanner sc = new Scanner(new File("./data.csv"));
             sc.useDelimiter(",");
@@ -119,7 +109,6 @@ class util implements utilities {
         System.out.print("Welcome to faculty login \nEnter your email: ");
         email = s.next();
         if (validate(email)) {
-            createList();
             exportToCSV();
         } else {
             System.out.println("Please enter a valid email id!");

@@ -2,8 +2,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.*;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.sql.*;
@@ -52,7 +55,7 @@ class util implements utilities {
     public void exportToCSV() {
         BufferedWriter br;
         try {
-            br = new BufferedWriter(new FileWriter("sample.csv"));
+            br = new BufferedWriter(new FileWriter("data.csv"));
             StringBuilder sb = new StringBuilder();
 
             for (String element : studList) {
@@ -79,38 +82,59 @@ class util implements utilities {
 
     public void displayList() {
         System.out.println("Attendance List for " + date() + ": ");
-        for (int i = 0; i < studList.size(); i++) {
-            System.out.print(studList.get(i) + "\t");
-        }
-        String jdbcDriver = "com.mysql.jdbc.Driver";
-        String DB_URL = "jdbc:mysql://localhost:3306/nice";
-        String USER = "root";
-        String PASS = "";
-        String query = "SELECT id, name, email, no FROM my_tab";
-        try {
-            // check jdbc driver (mysql connector / j). Make sure the connector is
-            // configured correctly (added to libraries) before checking it.
-            Class.forName(jdbcDriver);
-            System.out.println("Driver Loaded");
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Driver Failed To Load");
-            ex.printStackTrace();
-        }
-        try {
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            stmt.executeUpdate(query);
-            while (rs.next()) {
-                // Retrieve by column name
-                System.out.print("ID: " + rs.getInt("id"));
-                System.out.print(", Age: " + rs.getString("name"));
-                System.out.print(", First: " + rs.getString("email"));
-                System.out.println(", Last: " + rs.getInt("no"));
+        // for (int i = 0; i < studList.size(); i++) {
+        // System.out.print(studList.get(i) + "\t");
+        // }
+        try (PrintWriter writer = new PrintWriter("data.csv")) {
+            System.out.print("Enter the total roll number: ");
+            int roll = s.nextInt();
+            StringBuilder sb = new StringBuilder();
+            sb.append("Name");
+            sb.append(", ");
+            sb.append("- Status");
+            sb.append("\n\n");
+
+            while (roll != 0) {
+                System.out.print("Enter the student name: ");
+                String name = s.next();
+                sb.append(name);
+                sb.append(", ");
+                System.out.print("Enter the student status: ");
+                String status = s.next();
+                sb.append("- " + status);
+                sb.append("\n");
+                roll -= 1;
             }
-        } catch (SQLException e) {
+            writer.write(sb.toString());
+
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            Scanner sc = new Scanner(new File("./data.csv"));
+            sc.useDelimiter(",");
+            while (sc.hasNext()) {
+                System.out.print(sc.next());
+            }
+            sc.close();
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        // try {
+        // Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/nice",
+        // "root", "");
+        // PreparedStatement stmt = conn.prepareStatement("SELECT * FROM my_tab");
+        // ResultSet rs = stmt.executeQuery();
+        // stmt.executeUpdate();
+        // if (rs.next() == true) {
+        // System.out.print("ID: " + rs.getInt("id"));
+        // System.out.print(", Age: " + rs.getString("name"));
+        // System.out.print(", First: " + rs.getString("email"));
+        // System.out.println(", Last: " + rs.getInt("no"));
+        // }
+        // } catch (SQLException e) {
+        // e.printStackTrace();
+        // }
     }
 
     public void student() {

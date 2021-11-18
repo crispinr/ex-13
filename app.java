@@ -51,7 +51,7 @@ class util implements utilities {
             System.out.print("Enter the total roll number: ");
             int roll = s.nextInt();
             StringBuilder sb = new StringBuilder();
-            sb.append("Attendance List for, " + date() + ": \n");
+            sb.append("\nAttendance List for, " + date() + ": \n");
             sb.append("Name");
             sb.append(", ");
             sb.append("- Status");
@@ -106,8 +106,7 @@ class util implements utilities {
         System.out.print("Welcome to faculty login \nEnter your email: ");
         email = s.next();
         if (validate(email)) {
-            exportToCSV();
-            System.out.print("(D)isplay data or (U)pdate data?");
+            System.out.print("(D)isplay data or (U)pdate data? ");
             char k = s.next().charAt(0);
             if (k == 'D') {
                 displayList();
